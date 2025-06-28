@@ -24,7 +24,7 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     # ------------------------
-    # Build and push webapp applications
+    # Build and push webapp application
     # ------------------------
     - name: Build, tag, and push webapp image to ECR
       env:
