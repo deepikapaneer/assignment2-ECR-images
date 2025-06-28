@@ -45,6 +45,6 @@ jobs:
      
       run: |
         cd mysql
-        docker build --no-cache -f Dockerfile_mysql -t $ECR_MYSQL_REPO:latest .
+        docker build --no-cache -f Dockerfile -t $ECR_MYSQL_REPO:latest .
         docker push $ECR_MYSQL_REPO:latest
         cd ..
