@@ -12,6 +12,8 @@ jobs:
 
     env:
       AWS_REGION: us-east-1
+      ECR_MYSQL_REPO: 855529033156.dkr.ecr.us-east-1.amazonaws.com/mysql
+      ECR_WEBAPP_REPO: 855529033156.dkr.ecr.us-east-1.amazonaws.com/webapp
      
 
     steps:
@@ -32,23 +34,17 @@ jobs:
 
 
     - name: Build, tag, and push webapp image to ECR
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: webapp
-        IMAGE_TAG: v1
+     
       run: |
         cd webapp
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build --no-cache -t $ECR_WEBAPP_REPO:latest .
+        docker push $ECR_WEBAPP_REPO:latest
         cd ..
 
     - name: Build, tag, and push mysql image to ECR
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: mysql
-        IMAGE_TAG: v1
+     
       run: |
         cd mysql
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build --no-cache -f Dockerfile_mysql -t $ECR_MYSQL_REPO:latest .
+        docker push $ECR_MYSQL_REPO:latest
         cd ..
